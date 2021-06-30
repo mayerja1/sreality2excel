@@ -96,7 +96,7 @@ class Advertisment:
 
     def save(self, path: Optional[str] = None):
         if path is None:
-            path = f'wrongly_processed_ads/{hash(self)}'
+            path = f'../wrongly_processed_ads/{hash(self)}'
         with open(path, 'wb') as f:
             pickle.dump(self, f)
 

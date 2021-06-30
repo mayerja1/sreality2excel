@@ -3,7 +3,7 @@ from sreality_data import Advertisment
 from excel_utils import first_available_row
 from enum import Enum
 
-DATA_SHEET_PATH = 'data_FINAL_IQ_2021_Adam.xlsx'
+DATA_SHEET_PATH = '../workbooks/data_FINAL_IQ_2021_Adam.xlsx'
 ATTRIBUTES = (
     'size_m2',
     'rent_czk',
