@@ -32,7 +32,7 @@ class Advertisment:
 
     def __init__(self, url: str):
         self.data = self.get_ad_data_from_url(url)
-        self._hash = self.hash_id_from_url(url)
+        self._hash = int(self.hash_id_from_url(url))
         self.data_items = {
             item['name']: item for item in self.data['items']
         }
@@ -205,7 +205,13 @@ class Advertisment:
 
     @property
     def balcony_num(self) -> int:
-        return int(self.data_items['Balkón']['value'])
+        keys = ('Balkón', 'Lodžie')
+        for k in keys:
+            try:
+                int(self.data_items[k]['value'])
+            except KeyError:
+                pass
+        raise Exception('Balcony info not found')
 
     @property
     def cellar(self) -> bool:
