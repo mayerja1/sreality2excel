@@ -1,2 +1,3 @@
 openpyxl
 fake_useragent
+requests
