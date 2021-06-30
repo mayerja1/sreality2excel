@@ -1,0 +1,2 @@
+openpyxl
+fake_useragent
