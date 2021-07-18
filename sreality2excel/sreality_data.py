@@ -28,6 +28,11 @@ class HeatingType(Enum):
     REMOTE  = 4
 
 
+class ConditionType(Enum):
+    GOOD = 'D'
+    BAD  = 'S'
+
+
 class Advertisment:
 
     def __init__(self, url: str):
@@ -167,9 +172,11 @@ class Advertisment:
         return ConstructionType.OTHER
 
     @property
-    def condition(self) -> bool:
+    def condition(self) -> ConditionType:
         s = self.data_items['Stav objektu']['value'].lower()
-        return 'dobrý' in s or s == 'po rekonstrukci'
+        if 'špatný' in s:
+            return ConditionType.BAD
+        return ConditionType.GOOD
 
     @property
     def reconstruction(self) -> bool:
