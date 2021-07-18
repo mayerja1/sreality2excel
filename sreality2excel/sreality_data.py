@@ -234,7 +234,7 @@ class Advertisment:
         try:
             s = ' '.join(v['value'] for v in self.data_items['Topení']['value']).lower()
         except KeyError:
-            s = self.data['text'].lower()
+            s = self.data['text']['value'].lower()
         keywords = {
             HeatingType.LOCAL: (
                 'lokální plynové',
