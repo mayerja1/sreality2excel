@@ -2,7 +2,7 @@ import requests
 from typing import ClassVar, Dict, Any, Union, Literal, Optional, Iterable
 from fake_useragent import UserAgent
 from enum import Enum, auto
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import re
 import unicodedata
 import pickle
@@ -269,4 +269,4 @@ class Advertisment:
         elif s == 'včera':
             return date.today() - timedelta(1)
         else:
-            raise Exception(f'do not know how to parse the date: {s}')
+            return datetime.strptime(s, '%d.%m.%Y')
