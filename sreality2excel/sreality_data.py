@@ -179,7 +179,7 @@ class Advertisment:
             'po .*rekonstrukci',
             'rekonstrukcí'
         )
-        return self.check_keywords(keywords)
+        return self.check_keywords(keywords) and not self.check_keywords(['před rekonstrukcí'])
 
     @property
     def ownership(self) -> OwnershipType:
