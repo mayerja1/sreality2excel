@@ -2,4 +2,4 @@
 Tools for extracting advertisment data from sreality.cz and writing it to excel.
 
 Developed and tested in Python 3.9.1.
-To run instal dependencies in `requirements.txt`.
+To run instal dependencies in `requirements.txt`, for example by running `pip install -r requirements.txt`.
