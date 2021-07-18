@@ -28,6 +28,11 @@ class HeatingType(Enum):
     REMOTE  = 4
 
 
+class ConditionType(Enum):
+    GOOD = 'D'
+    BAD  = 'S'
+
+
 class Advertisment:
 
     def __init__(self, url: str):
@@ -167,9 +172,11 @@ class Advertisment:
         return ConstructionType.OTHER
 
     @property
-    def condition(self) -> bool:
+    def condition(self) -> ConditionType:
         s = self.data_items['Stav objektu']['value'].lower()
-        return 'dobrý' in s or s == 'po rekonstrukci'
+        if 'špatný' in s:
+            return ConditionType.BAD
+        return ConditionType.GOOD
 
     @property
     def reconstruction(self) -> bool:
@@ -179,7 +186,7 @@ class Advertisment:
             'po .*rekonstrukci',
             'rekonstrukcí'
         )
-        return self.check_keywords(keywords)
+        return self.check_keywords(keywords) and not self.check_keywords(['před rekonstrukcí'])
 
     @property
     def ownership(self) -> OwnershipType:
@@ -227,7 +234,7 @@ class Advertisment:
         try:
             s = ' '.join(v['value'] for v in self.data_items['Topení']['value']).lower()
         except KeyError:
-            s = self.data['text'].lower()
+            s = self.data['text']['value'].lower()
         keywords = {
             HeatingType.LOCAL: (
                 'lokální plynové',
