@@ -211,7 +211,7 @@ class Advertisment:
                 int(self.data_items[k]['value'])
             except KeyError:
                 pass
-        raise Exception('Balcony info not found')
+        return 0
 
     @property
     def cellar(self) -> bool:
