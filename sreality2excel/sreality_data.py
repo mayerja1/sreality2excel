@@ -215,7 +215,7 @@ class Advertisment:
         keys = ('Balkón', 'Lodžie')
         for k in keys:
             try:
-                int(self.data_items[k]['value'])
+                return int(self.data_items[k]['value'])
             except KeyError:
                 pass
         return 0
