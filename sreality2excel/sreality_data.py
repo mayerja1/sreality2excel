@@ -281,4 +281,4 @@ class Advertisment:
         elif s == 'včera':
             return date.today() - timedelta(1)
         else:
-            return datetime.strptime(s, '%d.%m.%Y')
+            return datetime.strptime(s, '%d.%m.%Y').date()
