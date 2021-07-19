@@ -218,14 +218,19 @@ class Advertisment:
                 return int(self.data_items[k]['value'])
             except KeyError:
                 pass
-        return 0
+        keywords = (
+            'balkón',
+            'balkónem',
+            'lodžie',
+            'lodžií',
+        )
+        return self.check_keywords(keywords)
 
     @property
     def cellar(self) -> bool:
         keywords = (
             'sklep',
-            'sklýpek',
-            'sklypek'
+            'sklýpek'
         )
         return self.check_keywords(keywords)
 
