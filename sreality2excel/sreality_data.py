@@ -134,10 +134,10 @@ class Advertisment:
     
     @property
     def provision(self) -> bool:
-        for note in self.data_items['Celková cena']['notes']:
-            if 'provize' in note.lower():
-                return True
-        return False
+        return any(
+            'provize' in note.lower()
+            for note in self.data_items['Celková cena']['notes']
+        )
 
     @property
     def rooms_num(self) -> int:
