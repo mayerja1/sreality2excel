@@ -6,6 +6,7 @@ from datetime import date, timedelta, datetime
 import re
 import unicodedata
 import pickle
+from itertools import chain
 
 UA = UserAgent()
 
@@ -134,10 +135,13 @@ class Advertisment:
     
     @property
     def provision(self) -> bool:
-        return any(
-            'provize' in note.lower()
-            for note in self.data_items['Celková cena']['notes']
-        )
+        try:
+            return any(
+                'provize' in note.lower()
+                for note in chain(self.data_items['Celková cena']['notes'], [self.data_items['Poznámka k ceně']['value']])
+            )
+        except KeyError:
+            return False
 
     @property
     def rooms_num(self) -> int:
@@ -199,9 +203,11 @@ class Advertisment:
 
     @property
     def floors_num(self) -> Optional[int]:
-        s = self.data_items['Podlaží']['value']
+        s = self.data_items['Podlaží']['value'].lower()
+        pattern = 'z celkem [0-9]+'
+        match = re.search(pattern, s)
         try:
-            return int(s.split(' ')[-1])
+            return int(s[match.start():match.end()].split(' ')[-1])
         except ValueError:
             return None
 
