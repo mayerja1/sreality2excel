@@ -1,12 +1,13 @@
-import requests
-from typing import ClassVar, Dict, Any, Union, Literal, Optional, Iterable
-from fake_useragent import UserAgent
-from enum import Enum, auto
-from datetime import date, timedelta, datetime
+import pickle
 import re
 import unicodedata
-import pickle
+from datetime import date, timedelta, datetime
+from enum import Enum
 from itertools import chain
+from typing import Dict, Any, Optional, Iterable
+
+import requests
+from fake_useragent import UserAgent
 
 UA = UserAgent()
 
@@ -57,7 +58,7 @@ class Advertisment:
         Returns:
             Dict[str, Any]: the data in json format
         """
-        header = {'User-Agent':str(UA.chrome)}
+        header = {'User-Agent': str(UA.chrome)}
         response = requests.get(
             f'https://www.sreality.cz/api/cs/v2/estates/{hash_id}?tms=200',
             headers=header
@@ -90,10 +91,7 @@ class Advertisment:
             str: hash_id of the estate
         """
         tail = url.split('/')[-1]
-        for idx, c in enumerate(tail):
-            if not c.isnumeric():
-                break
-        return tail[:idx]
+        return tail
 
     def check_keywords(self, keywords: Iterable[str], s: Optional[str] = None):
         if s is None:
@@ -288,3 +286,7 @@ class Advertisment:
             return date.today() - timedelta(1)
         else:
             return datetime.strptime(s, '%d.%m.%Y').date()
+
+
+if __name__ == '__main__':
+    ad = Advertisment('https://www.sreality.cz/detail/prodej/byt/3+1/brno-bystrc-stouracova/3899631708')
